@@ -61,7 +61,6 @@ class psCacheWarmer extends oxUBase
         $aUrls = array();
         if(empty($sSitemapUrl)) {
             $sSitemapUrl = $this->_getSitemapUrl();
-            #$sSitemapUrl = "https://www.likoerfactory.de/sitemaps/sitemap-index.xml";
         }
 
         $sSitemapXmlData = @file_get_contents($sSitemapUrl);
