@@ -20,7 +20,10 @@ Installation
 	
 Changelog
 
-	25.08.2016	1.0.0	module release
+	12.10.2016	1.0.1	fix reading sitemap url with user/pass
+						fix checking sitemap object
+						
+	25.08.2016	1.0.0	module release for oxid 4.7, 4.8, 4.9, 4.10
 
 
 License

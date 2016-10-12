@@ -8,7 +8,7 @@
  * @copyright (c) Proud Sourcing GmbH | 2016
  * @link www.proudcommerce.com
  * @package psCacheWarmer
- * @version 1.0.0
+ * @version 1.0.1
  **/
 class psCacheWarmer extends oxUBase
 {
@@ -63,8 +63,12 @@ class psCacheWarmer extends oxUBase
             $sSitemapUrl = $this->_getSitemapUrl();
         }
 
+        $sUsername = oxRegistry::getConfig()->getShopConfVar('psCacheWarmerUser');
+        $sPassword = oxRegistry::getConfig()->getShopConfVar('psCacheWarmerPass');
+        $sSitemapUrl = str_replace("://", "://".$sUsername.":".$sPassword."@", $sSitemapUrl);
+
         $sSitemapXmlData = @file_get_contents($sSitemapUrl);
-        if(($oSitemap = @simplexml_load_string($sSitemapXmlData)) != false) {
+        if($oSitemap = @simplexml_load_string($sSitemapXmlData)) {
             if (count($oSitemap->sitemap) > 0) {
                 foreach ($oSitemap->sitemap as $oSubSitemap) {
                     $sNextSitemapUrl = (string)$oSubSitemap->loc;
