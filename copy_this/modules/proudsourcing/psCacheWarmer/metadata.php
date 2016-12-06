@@ -28,7 +28,7 @@ $aModule = array(
         'en' => 'Automatically calling urls using the xml-sitemap, eg. for cache warming.
                 <b>URL:</b> <a href="'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'" target="_blank">'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'</a>',
     ),
-    'thumbnail'    => 'logo.jpg',
+    'thumbnail'    => 'logo_pc-os.jpg',
     'version'      => '1.0.1',
     'author'       => 'Proud Sourcing GmbH',
     'url'          => 'http://www.proudcommerce.com/',
