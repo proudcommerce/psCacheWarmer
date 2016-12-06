@@ -4,27 +4,23 @@ psCacheWarmer
 Automatically calling urls using the xml-sitemap, eg. for cache warming.
 Free module for OXID eshop 4.7, 4.8, 4.9 and 4.10.
 
-
 Features
 
 	- admin setting sitemap url
 	- admin setting security key (cronjob)
 	- admin setting basic auth user/password
 
-
 Installation
 
 	1. copy content from copy_this folder into your shop root
 	2. activate module psCacheWarmer in shop admin
 
-	
+Tip: Use the [OXID module connector](https://github.com/OXIDprojects/OXID-Module-Connector) to install this module.
+
 Changelog
 
-	12.10.2016	1.0.1	fix reading sitemap url with user/pass
-						fix checking sitemap object
-						
-	25.08.2016	1.0.0	module release for oxid 4.7, 4.8, 4.9, 4.10
-
+	2016-10-12	1.0.1	fix reading sitemap url with user/pass,fix checking sitemap object
+	2016-08-25	1.0.0	module release for oxid 4.7, 4.8, 4.9, 4.10
 
 License
 
