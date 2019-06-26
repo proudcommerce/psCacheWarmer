@@ -2,7 +2,7 @@ psCacheWarmer
 ============
 
 Automatically calling urls using the xml-sitemap, eg. for cache warming.
-Free module for OXID eshop 6.  
+Free module for OXID eshop 6.
 
 Features
 
@@ -12,8 +12,8 @@ Features
 
 Installation
 
-	1. `composer config repo.ProudCommerce/CacheWarmer git https://github.com/Josef-A-Puckl/psCacheWarmer/`
-	2. `composer require proudcommerce/cachewarmer`
+	1. composer config repo.ProudCommerce/CacheWarmer git https://github.com/Josef-A-Puckl/psCacheWarmer/
+	2. composer require proudcommerce/cachewarmer
 
 
 Changelog
