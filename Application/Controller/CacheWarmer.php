@@ -10,7 +10,13 @@
  * @package psCacheWarmer
  * @version 1.0.1
  **/
-class psCacheWarmer extends oxUBase
+
+namespace ProudCommerce\CacheWarmer\Application\Controller;
+
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\Controller\BaseController;
+
+class CacheWarmer extends BaseController
 {
     /**
      * Executes cache warmer
@@ -21,15 +27,15 @@ class psCacheWarmer extends oxUBase
 
         if($this->_checkAuthentification()) {
             $aUrls = $this->_getSitemapContent();
-            if(!empty(oxRegistry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl'))  && count($aUrls) > 0) {
+            if(!empty(Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl'))  && count($aUrls) > 0) {
                 foreach($aUrls as $sUrl) {
                     $oCurl = curl_init();
                     curl_setopt($oCurl, CURLOPT_URL, $sUrl);
                     curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
                     curl_setopt($oCurl, CURLOPT_CONNECTTIMEOUT, 25);
                     curl_setopt($oCurl, CURLOPT_HEADER, true);
-                    $sUsername = oxRegistry::getConfig()->getShopConfVar('psCacheWarmerUser');
-                    $sPassword = oxRegistry::getConfig()->getShopConfVar('psCacheWarmerPass');
+                    $sUsername = Registry::getConfig()->getShopConfVar('psCacheWarmerUser');
+                    $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
                     curl_setopt($oCurl, CURLOPT_USERPWD, $sUsername . ":" . $sPassword);
                     curl_exec($oCurl);
                     $httpStatus = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
@@ -63,8 +69,8 @@ class psCacheWarmer extends oxUBase
             $sSitemapUrl = $this->_getSitemapUrl();
         }
 
-        $sUsername = oxRegistry::getConfig()->getShopConfVar('psCacheWarmerUser');
-        $sPassword = oxRegistry::getConfig()->getShopConfVar('psCacheWarmerPass');
+        $sUsername = Registry::getConfig()->getShopConfVar('psCacheWarmerUser');
+        $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
         $sSitemapUrl = str_replace("://", "://".$sUsername.":".$sPassword."@", $sSitemapUrl);
 
         $sSitemapXmlData = @file_get_contents($sSitemapUrl);
@@ -93,8 +99,8 @@ class psCacheWarmer extends oxUBase
      */
     protected function _getSitemapUrl()
     {
-        $sSitemapUrl = oxRegistry::getConfig()->getConfigParam('sShopURL');
-        $sSitemapUrl .= oxRegistry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl');
+        $sSitemapUrl = Registry::getConfig()->getConfigParam('sShopURL');
+        $sSitemapUrl .= Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl');
         return $sSitemapUrl;
     }
 
@@ -105,8 +111,8 @@ class psCacheWarmer extends oxUBase
      */
     protected function _checkAuthentification()
     {
-        $oConfig = oxRegistry::getConfig();
-        $sKey = oxRegistry::getConfig()->getRequestParameter("key");
+        $oConfig = Registry::getConfig();
+        $sKey = Registry::getConfig()->getRequestParameter("key");
         $sSavedKey = $oConfig->getShopConfVar('psCacheWarmerKey', $oConfig->getShopId());
         if($sSavedKey == $sKey) {
             return true;
