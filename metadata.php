@@ -14,7 +14,7 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '1.1';
+$sMetadataVersion = '2.0';
 
 /**
  * Module information
@@ -29,14 +29,14 @@ $aModule = array(
                 <b>URL:</b> <a href="'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'" target="_blank">'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'</a>',
     ),
     'thumbnail'    => 'logo_pc-os.jpg',
-    'version'      => '1.0.1',
+    'version'      => '2.0.0',
     'author'       => 'Proud Sourcing GmbH',
     'url'          => 'http://www.proudcommerce.com/',
     'email'        => 'support@proudcommerce.com',
     'extend'       => array(
     ),
-    'files' => array(
-        'pscachewarmer'     => 'proudsourcing/psCacheWarmer/application/controllers/pscachewarmer.php',
+    'controllers' => array(
+        'pscachewarmer' => \ProudCommerce\CacheWarmer\Application\Controller\CacheWarmer::class,
     ),
     'templates' => array(
     ),
