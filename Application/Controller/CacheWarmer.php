@@ -18,6 +18,13 @@ use OxidEsales\Eshop\Core\Controller\BaseController;
 
 class CacheWarmer extends BaseController
 {
+    protected $_sFileAndPathToExportFile = '';
+    protected $_handle = null;
+    protected $_sSeparator = ";";
+    protected $_sEnclosure = "'";
+
+    // todo: add to config
+    protected $_aHttpCodesIsOkay = array('200','302');
     /**
      * Executes cache warmer
      */
@@ -25,31 +32,18 @@ class CacheWarmer extends BaseController
     {
         $sMessage = "<b>psCacheWarmer</b><br>".$this->_getSitemapUrl()."<br>---<br>";
 
+        $this->_sFileAndPathToExportFile = $this->_getPathWithFileName();
+        if(Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsv') == true)
+        {
+            $this->_handle = fopen( $this->_sFileAndPathToExportFile, "w+");;
+        }
+
         if($this->_checkAuthentification()) {
             $aUrls = $this->_getSitemapContent();
             if(!empty(Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl'))  && count($aUrls) > 0) {
                 foreach($aUrls as $sUrl) {
-                    $oCurl = curl_init();
-                    curl_setopt($oCurl, CURLOPT_URL, $sUrl);
-                    curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($oCurl, CURLOPT_CONNECTTIMEOUT, 25);
-                    curl_setopt($oCurl, CURLOPT_HEADER, true);
-                    $sUsername = Registry::getConfig()->getShopConfVar('psCacheWarmerUser');
-                    $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
-                    curl_setopt($oCurl, CURLOPT_USERPWD, $sUsername . ":" . $sPassword);
-                    curl_exec($oCurl);
-                    $httpStatus = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
-                    if(curl_error($oCurl)) {
-                        $sMessage .= '<span style="color: orange;">ERROR '.$httpStatus.': ' . curl_error($oCurl) . '</span><br>';
-                    } else {
-                        if(trim($httpStatus) == '500')
-                        {
-                            $sMessage .= '<span style="color: red;">ERROR <b>'.$httpStatus.'</b>: ' . $sUrl. '</span><br>';
-                        }
-                        else{
-                            $sMessage .= '<span style="color: green;">OK '.$httpStatus.': ' . $sUrl . '</span><br>';
-                        }
-                    }
+                    $oCurl = $this->_runCurlConnect($sUrl);
+                    $sMessage .= $this->_checkCurlResults($oCurl,$sUrl);
                     curl_close($oCurl);
                 }
             } else {
@@ -59,8 +53,71 @@ class CacheWarmer extends BaseController
             $sMessage .= '<span style="color: red;">Authentifizierung fehlgeschlagen!</span>';
         }
 
+        if(Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsv') == true)
+        {
+            fclose($this->_handle);
+        }
         echo '<pre>'.$sMessage.'</pre>';
         exit;
+    }
+
+    /**
+     * @param $sUrl
+     * @return false|resource
+     */
+    protected function _runCurlConnect($sUrl)
+    {
+        $oCurl = curl_init();
+        curl_setopt($oCurl, CURLOPT_URL, $sUrl);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($oCurl, CURLOPT_CONNECTTIMEOUT, 25);
+        curl_setopt($oCurl, CURLOPT_HEADER, true);
+        $sUsername = Registry::getConfig()->getShopConfVar('psCacheWarmerUser');
+        $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
+        curl_setopt($oCurl, CURLOPT_USERPWD, $sUsername . ":" . $sPassword);
+        curl_exec($oCurl);
+        return $oCurl;
+    }
+
+    protected function _checkCurlResults($oCurl,$sUrl)
+    {
+        $sMessage = '';
+        $httpStatus = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
+        if(curl_error($oCurl)) {
+            $sMessage .= '<span style="color: orange;">ERROR '.$httpStatus.': ' . curl_error($oCurl) . '</span><br>';
+            $sStatusMsg = 'ERROR';
+            $sTmpText = curl_error($oCurl);
+        } else {
+            $sTmpText = $sUrl;
+            if(in_array(trim($httpStatus),$this->_aHttpCodesIsOkay))
+            {
+                $sMessage .= '<span style="color: green;">OK '.$httpStatus.': ' . $sUrl . '</span><br>';
+                $sStatusMsg = 'OK';
+            }
+            else{
+                $sMessage .= '<span style="color: red;">ERROR <b>'.$httpStatus.'</b>: ' . $sUrl. '</span><br>';
+                $sStatusMsg = 'ERROR';
+            }
+        }
+
+        if(Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsv') == true)
+        {
+            $aTmp = array($sStatusMsg,
+                        $httpStatus,
+                          $sTmpText
+            );
+
+            if(trim($httpStatus) == '200' && Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsvOnlyError') == true)
+            {
+                $aTmp = array();
+            }
+
+            if(count($aTmp)) {
+                fputcsv($this->_handle, $aTmp, $this->_sSeparator, $this->_sEnclosure);
+            }
+        }
+
+        return $sMessage;
     }
 
     /**
@@ -125,4 +182,26 @@ class CacheWarmer extends BaseController
         }
         return false;
     }
+
+
+    /**
+     * Return Path with Filename, from /log
+     *
+     * @return string
+     */
+    protected function _getPathWithFileName()
+    {
+        return Registry::getConfig()->getConfigParam('sShopDir').'/log/'.$this->_getFileName();
+    }
+
+    /**
+     * Return Filename, Formae psCacheWarmerReport_20190717-122345.csv
+     *
+     * @return string
+     */
+    protected function _getFileName()
+    {
+        return 'psCacheWarmerReport_'.date("Ymd-His").".csv";
+    }
+
 }
