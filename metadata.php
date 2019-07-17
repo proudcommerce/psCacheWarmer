@@ -67,5 +67,17 @@ $aModule = array(
             'type'  => 'str',
             'value' => '',
         ),
+        array(
+            'group' => 'psCacheWarmerConfig',
+            'name'  => 'psCacheWarmerWriteCsv',
+            'type'  => 'bool',
+            'value' => '',
+        ),
+        array(
+            'group' => 'psCacheWarmerConfig',
+            'name'  => 'psCacheWarmerWriteCsvOnlyError',
+            'type'  => 'bool',
+            'value' => '',
+        ),
     ),
 );
