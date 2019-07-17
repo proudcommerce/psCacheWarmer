@@ -22,6 +22,8 @@ $aLang = array(
     'SHOP_MODULE_psCacheWarmerKey'                      => 'Cronjob-Key',
     'SHOP_MODULE_psCacheWarmerUser'                     => 'Basic-Auth Benutzer',
     'SHOP_MODULE_psCacheWarmerPass'                     => 'Basic-Auth Kennwort',
+    'SHOP_MODULE_psCacheWarmerWriteCsv'                 => 'Report als CSV-Datei im Log-Ordner abspeichern',
+    'SHOP_MODULE_psCacheWarmerWriteCsvOnlyError'         => 'Alle Ergebnisse ausser HTTP-Code 200 loggen',
 
 );
 
