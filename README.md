@@ -18,8 +18,8 @@ Installation
 
 Changelog
 
-	2019-07-17	2.1.0	add error 500 check (https://github.com/proudcommerce/psCacheWarmer/pull/2)
-	2019-06-26	2.0.0	OXID eShop 6 (https://github.com/proudcommerce/psCacheWarmer/pull/1)
+	2019-07-17	2.1.0	add error 500 check (PR #2)
+	2019-06-26	2.0.0	OXID eShop 6 (PR #1)
     	2016-10-12	1.0.1	fix reading sitemap url with user/pass,fix checking sitemap object
 	2016-08-25	1.0.0	module release for oxid 4.7, 4.8, 4.9, 4.10
 
