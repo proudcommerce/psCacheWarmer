@@ -29,7 +29,7 @@ $aModule = array(
                 <b>URL:</b> <a href="'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'" target="_blank">'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'</a>',
     ),
     'thumbnail'    => 'logo_pc-os.jpg',
-    'version'      => '2.0.0',
+    'version'      => '2.1.0',
     'author'       => 'Proud Sourcing GmbH',
     'url'          => 'http://www.proudcommerce.com/',
     'email'        => 'support@proudcommerce.com',
