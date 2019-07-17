@@ -42,7 +42,13 @@ class CacheWarmer extends BaseController
                     if(curl_error($oCurl)) {
                         $sMessage .= '<span style="color: orange;">ERROR '.$httpStatus.': ' . curl_error($oCurl) . '</span><br>';
                     } else {
-                        $sMessage .= '<span style="color: green;">OK '.$httpStatus.': ' . $sUrl . '</span><br>';
+                        if(trim($httpStatus) == '500')
+                        {
+                            $sMessage .= '<span style="color: red;">ERROR <b>'.$httpStatus.'</b>: ' . $sUrl. '</span><br>';
+                        }
+                        else{
+                            $sMessage .= '<span style="color: green;">OK '.$httpStatus.': ' . $sUrl . '</span><br>';
+                        }
                     }
                     curl_close($oCurl);
                 }
