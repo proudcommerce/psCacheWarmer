@@ -18,6 +18,7 @@ Installation
 
 Changelog
 
+	2019-07-19	2.2.0	Write Report in a file (PR #3)
 	2019-07-17	2.1.0	add error 500 check (PR #2)
 	2019-06-26	2.0.0	OXID eShop 6 (PR #1)
 	2016-10-12	1.0.1	fix reading sitemap url with user/pass,fix checking sitemap object
