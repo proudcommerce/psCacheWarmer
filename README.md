@@ -12,8 +12,7 @@ Features
 
 Installation
 
-	1. composer config repo.ProudCommerce/CacheWarmer git https://github.com/Josef-A-Puckl/psCacheWarmer/
-	2. composer require proudcommerce/cachewarmer
+	composer require proudcommerce/cachewarmer
 
 
 Changelog
