@@ -17,6 +17,7 @@ Installation
 
 Changelog
 
+	2020-08-06	2.2.1	fix for OXID 6.2
 	2019-07-19	2.2.0	Write Report in a file (PR #3)
 	2019-07-17	2.1.0	add error 500 check (PR #2)
 	2019-06-26	2.0.0	OXID eShop 6 (PR #1)
@@ -41,5 +42,4 @@ License
 
 Copyright
 
-	Proud Sourcing GmbH 2016
-	www.proudcommerce.com / www.proudsourcing.de
+	ProudCommerce { www.proudcommerce.com }

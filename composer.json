@@ -1,6 +1,5 @@
 {
   "name": "proudcommerce/cachewarmer",
-  "version": "2.2.0",
   "description": "psCacheWarmer",
   "type": "oxideshop-module",
   "license": [

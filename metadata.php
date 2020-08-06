@@ -5,10 +5,10 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * @copyright (c) Proud Sourcing GmbH | 2016
+ * @copyright (c) Proud Sourcing GmbH | 2020
  * @link www.proudcommerce.com
  * @package psCacheWarmer
- * @version 1.0.1
+ * @version 2.2.1
 **/
 
 /**
@@ -29,7 +29,7 @@ $aModule = array(
                 <b>URL:</b> <a href="'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'" target="_blank">'.oxRegistry::getConfig()->getConfigParam('sShopURL').'?cl=psCacheWarmer&key='.oxRegistry::getConfig()->getShopConfVar('psCacheWarmerKey', oxRegistry::getConfig()->getShopId()).'</a>',
     ),
     'thumbnail'    => 'logo_pc-os.jpg',
-    'version'      => '2.2.0',
+    'version'      => '2.2.1',
     'author'       => 'Proud Sourcing GmbH',
     'url'          => 'http://www.proudcommerce.com/',
     'email'        => 'support@proudcommerce.com',
@@ -71,13 +71,13 @@ $aModule = array(
             'group' => 'psCacheWarmerConfig',
             'name'  => 'psCacheWarmerWriteCsv',
             'type'  => 'bool',
-            'value' => '',
+            'value' => false,
         ),
         array(
             'group' => 'psCacheWarmerConfig',
             'name'  => 'psCacheWarmerWriteCsvOnlyError',
             'type'  => 'bool',
-            'value' => '',
+            'value' => true,
         ),
     ),
 );
