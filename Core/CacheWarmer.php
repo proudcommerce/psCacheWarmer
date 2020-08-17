@@ -13,40 +13,28 @@
 
 namespace ProudCommerce\CacheWarmer\Core;
 
-if (PHP_SAPI != 'cli') {
-    throw new RuntimeException('Only cli execution allowed!');
-}
-
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\Controller\BaseController;
 
 /**
  * Class CacheWarmer
  * @package ProudCommerce\CacheWarmer\Core
  */
-class CacheWarmer extends BaseController
+class CacheWarmer
 {
 
     /**
-     * @return string|void|null
+     *
      */
-    public function render()
+    public function run()
     {
-        $sMessage = "<b>psCacheWarmer</b><br>" . $this->_getSitemapUrl() . "<br>---<br>";
-
         $aUrls = $this->_getSitemapContent();
-        if (!empty(Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl')) && count($aUrls) > 0) {
+        if (!empty(Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl')) && !empty($aUrls)) {
             foreach ($aUrls as $sUrl) {
                 $oCurl = $this->_runCurlConnect($sUrl);
-                $sMessage .= $this->_checkCurlResults($oCurl, $sUrl);
+                $this->_checkCurlResults($oCurl, $sUrl);
                 curl_close($oCurl);
             }
-        } else {
-            $sMessage .= '<span style="color: red;">Keine Daten vorhanden!</span>';
         }
-
-        echo '<pre>' . $sMessage . '</pre>';
-        exit;
     }
 
     /**
@@ -70,40 +58,29 @@ class CacheWarmer extends BaseController
     /**
      * @param $oCurl
      * @param $sUrl
-     * @return string
      */
     protected function _checkCurlResults($oCurl, $sUrl)
     {
-        $sMessage = '';
         $httpStatus = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
         if (curl_error($oCurl)) {
-            $sMessage .= '<span style="color: orange;">ERROR ' . $httpStatus . ': ' . curl_error($oCurl) . '</span><br>';
             $sStatusMsg = 'ERROR';
-            $sTmpText = curl_error($oCurl);
+            $sMessage = curl_error($oCurl);
         } else {
-            $sTmpText = $sUrl;
-            if (in_array(trim($httpStatus), Registry::getConfig()->getShopConfVar('psCacheWarmerConfig'))) {
-                $sMessage .= '<span style="color: green;">OK ' . $httpStatus . ': ' . $sUrl . '</span><br>';
+            $sMessage = $sUrl;
+            if (in_array(trim($httpStatus), Registry::getConfig()->getShopConfVar('psCacheWarmerHttpCodes'))) {
                 $sStatusMsg = 'OK';
             } else {
-                $sMessage .= '<span style="color: red;">ERROR <b>' . $httpStatus . '</b>: ' . $sUrl . '</span><br>';
                 $sStatusMsg = 'ERROR';
             }
         }
+        $httpStatus = trim($httpStatus);
+        $aLog = [$sStatusMsg, $httpStatus, $sMessage];
+        print_r($aLog);
 
-        if (Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsv') == true) {
-            $aTmp = [$sStatusMsg, $httpStatus, $sTmpText];
-
-            if (trim($httpStatus) == '200' && Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsvOnlyError') == true) {
-                $aTmp = [];
-            }
-
-            if (count($aTmp)) {
-                Registry::getUtils()->writeToLog(implode(' | ', $aTmp) . "\r", 'tabslbillomat_' . date("d.m.Y H:i:s") . '.log');
-            }
+        if (!empty($aLog) && ((Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsvOnlyError') == true && $httpStatus != '200') || Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsv') == true)) {
+            Registry::getUtils()->writeToLog(implode(' | ', $aLog) . "\r", 'pscachewarmer_' . date("d.m.Y H:i:s") . '.log');
         }
 
-        return $sMessage;
     }
 
     /**
@@ -121,6 +98,8 @@ class CacheWarmer extends BaseController
         $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
         $sSitemapUrl = str_replace("://", "://" . $sUsername . ":" . $sPassword . "@", $sSitemapUrl);
 
+        echo $sSitemapUrl . "\r\n";
+
         $sSitemapXmlData = @file_get_contents($sSitemapUrl);
         if ($oSitemap = @simplexml_load_string($sSitemapXmlData)) {
             if (count($oSitemap->sitemap) > 0) {
@@ -136,7 +115,6 @@ class CacheWarmer extends BaseController
                 }
             }
         }
-        #print_r($aUrls);
         return $aUrls;
     }
 

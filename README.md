@@ -16,7 +16,7 @@ Installation
 
 Usage
 
-	php source/modules/pc/cachewarmer/Core/CacheWarmer.php
+	php source/modules/pc/cachewarmer/bin/warmup.php [optional parameter s for shop-id, eg. warmup.php -s 2]
 	
 Changelog
 
