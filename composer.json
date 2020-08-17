@@ -1,32 +1,32 @@
 {
-  "name": "proudcommerce/cachewarmer",
-  "description": "psCacheWarmer",
-  "type": "oxideshop-module",
-  "license": [
-    "proprietary"
-  ],
-  "authors": [
-    {
-      "name": "ProudCommerce",
-      "homepage": "https://www.proudcommerce.com/",
-      "email": "welcome@proudcommerce.com",
-      "role": "Developer"
+    "name": "proudcommerce/cachewarmer",
+    "description": "Website anhand der XML-Sitemap automatisch aufrufen, z. B. zum 'Aufwärmen' eines Caches.",
+    "type": "oxideshop-module",
+    "license": [
+        "GPL-3.0-or-later"
+    ],
+    "authors": [
+        {
+            "name": "ProudCommerce",
+            "homepage": "https://www.proudcommerce.com/",
+            "email": "welcome@proudcommerce.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@proudcommerce.com"
+    },
+    "require": {
+        "php": ">= 7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProudCommerce\\CacheWarmer\\": "../../../source/modules/pc/cachewarmer"
+        }
+    },
+    "extra": {
+        "oxideshop": {
+            "target-directory": "pc/cachewarmer"
+        }
     }
-  ],
-  "support": {
-    "email": "support@proudcommerce.com"
-  },
-  "require": {
-    "php": ">= 7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "ProudCommerce\\CacheWarmer\\": "../../../source/modules/proudsourcing/psCacheWarmer"
-    }
-  },
-  "extra": {
-    "oxideshop": {
-      "target-directory": "proudsourcing/psCacheWarmer"
-    }
-  }
 }

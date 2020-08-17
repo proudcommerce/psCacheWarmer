@@ -5,28 +5,25 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @copyright (c) Proud Sourcing GmbH | 2016
+ * @copyright (c) ProudCommerce | 2020
  * @link www.proudcommerce.com
  * @package psCacheWarmer
- * @version 1.0.1
+ * @version 3.0.0
  **/
-$sLangName  = "Deutsch";
+
+$sLangName = "Deutsch";
 // -------------------------------
 // RESOURCE IDENTITFIER = STRING
 // -------------------------------
-$aLang = array(
-    'charset'                                           => 'UTF-8',
+$aLang = [
+    'charset' => 'UTF-8',
 
-    'SHOP_MODULE_GROUP_psCacheWarmerConfig'             => 'Einstellungen',
-    'SHOP_MODULE_psCacheWarmerSitemapUrl'               => 'XML-Sitemap URL',
-    'SHOP_MODULE_psCacheWarmerKey'                      => 'Cronjob-Key',
-    'SHOP_MODULE_psCacheWarmerUser'                     => 'Basic-Auth Benutzer',
-    'SHOP_MODULE_psCacheWarmerPass'                     => 'Basic-Auth Kennwort',
-    'SHOP_MODULE_psCacheWarmerWriteCsv'                 => 'Report als CSV-Datei im Log-Ordner abspeichern',
-    'SHOP_MODULE_psCacheWarmerWriteCsvOnlyError'         => 'Alle Ergebnisse ausser HTTP-Code 200 loggen',
+    'SHOP_MODULE_GROUP_psCacheWarmerConfig'      => 'Einstellungen',
+    'SHOP_MODULE_psCacheWarmerSitemapUrl'        => 'XML-Sitemap URL',
+    'SHOP_MODULE_psCacheWarmerKey'               => 'Cronjob-Key',
+    'SHOP_MODULE_psCacheWarmerUser'              => 'Basic-Auth Benutzer',
+    'SHOP_MODULE_psCacheWarmerPass'              => 'Basic-Auth Kennwort',
+    'SHOP_MODULE_psCacheWarmerWriteCsv'          => 'Report als CSV-Datei im Log-Ordner abspeichern',
+    'SHOP_MODULE_psCacheWarmerWriteCsvOnlyError' => 'Alle Ergebnisse ausser HTTP-Code 200 loggen',
 
-);
-
-/*
-[{ oxmultilang ident="GENERAL_YOUWANTTODELETE" }]
-*/
+];
