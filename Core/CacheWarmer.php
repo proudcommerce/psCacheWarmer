@@ -8,7 +8,7 @@
  * @copyright (c) ProudCommerce | 2020
  * @link www.proudcommerce.com
  * @package psCacheWarmer
- * @version 3.0.0
+ * @version 3.0.1
  **/
 
 namespace ProudCommerce\CacheWarmer\Core;
@@ -123,7 +123,7 @@ class CacheWarmer
      */
     protected function _getSitemapUrl()
     {
-        $sSitemapUrl = Registry::getConfig()->getConfigParam('sShopURL');
+        $sSitemapUrl = Registry::getConfig()->getShopURL();
         $sSitemapUrl .= Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl');
         return $sSitemapUrl;
     }

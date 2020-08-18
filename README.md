@@ -20,6 +20,7 @@ Usage
 	
 Changelog
 
+    2020-08-18	3.0.1	fix getting shopurl (ee)
     2020-08-17  3.0.0   cli only, some improvements
 	2020-08-06  2.2.1   fix for OXID 6.2
 	2019-07-19  2.2.0   Write Report in a file (PR #3)
