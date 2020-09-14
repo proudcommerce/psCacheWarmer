@@ -20,8 +20,8 @@ Usage
 	
 Changelog
 
-	2020-08-18  3.0.1   fix getting shopurl (ee)
-	2020-08-17  3.0.0   cli only, some improvements
+    2020-09-14  3.1.0   add own logger
+    2020-08-17  3.0.0   cli only, some improvements
 	2020-08-06  2.2.1   fix for OXID 6.2
 	2019-07-19  2.2.0   Write Report in a file (PR #3)
 	2019-07-17  2.1.0   add error 500 check (PR #2)

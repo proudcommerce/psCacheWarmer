@@ -6,9 +6,9 @@
  * (at your option) any later version.
  *
  * @copyright (c) ProudCommerce | 2020
- * @link www.proudcommerce.com
- * @package psCacheWarmer
- * @version 3.0.1
+ * @link          www.proudcommerce.com
+ * @package       psCacheWarmer
+ * @version       3.1.0
  **/
 
 namespace ProudCommerce\CacheWarmer\Core;
@@ -17,6 +17,7 @@ use OxidEsales\Eshop\Core\Registry;
 
 /**
  * Class CacheWarmer
+ *
  * @package ProudCommerce\CacheWarmer\Core
  */
 class CacheWarmer
@@ -39,6 +40,7 @@ class CacheWarmer
 
     /**
      * @param $sUrl
+     *
      * @return false|resource
      */
     protected function _runCurlConnect($sUrl)
@@ -52,6 +54,7 @@ class CacheWarmer
         $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
         curl_setopt($oCurl, CURLOPT_USERPWD, $sUsername . ":" . $sPassword);
         curl_exec($oCurl);
+
         return $oCurl;
     }
 
@@ -78,13 +81,14 @@ class CacheWarmer
         print_r($aLog);
 
         if (!empty($aLog) && ((Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsvOnlyError') == true && $httpStatus != '200') || Registry::getConfig()->getShopConfVar('psCacheWarmerWriteCsv') == true)) {
-            Registry::getUtils()->writeToLog(implode(' | ', $aLog) . "\r", 'pscachewarmer_' . date("d.m.Y H:i:s") . '.log');
+            $logger = Logging::getLogger('psCacheWarmer', Registry::getConfig()->getLogsDir() . 'pscachewarmer_' . date("dmY_His") . '.log');
+            $logger->info(implode(' | ', $aLog) . "\r");
         }
-
     }
 
     /**
      * @param string $sSitemapUrl
+     *
      * @return array
      */
     protected function _getSitemapContent($sSitemapUrl = "")
@@ -104,17 +108,18 @@ class CacheWarmer
         if ($oSitemap = @simplexml_load_string($sSitemapXmlData)) {
             if (count($oSitemap->sitemap) > 0) {
                 foreach ($oSitemap->sitemap as $oSubSitemap) {
-                    $sNextSitemapUrl = (string)$oSubSitemap->loc;
+                    $sNextSitemapUrl = (string) $oSubSitemap->loc;
                     $aUrls = array_merge($aUrls, $this->_getSitemapContent($sNextSitemapUrl));
                 }
             }
 
             if (count($oSitemap->url) > 0) {
                 foreach ($oSitemap->url as $oSitemapUrl) {
-                    $aUrls[] = (string)$oSitemapUrl->loc;
+                    $aUrls[] = (string) $oSitemapUrl->loc;
                 }
             }
         }
+
         return $aUrls;
     }
 
@@ -123,8 +128,9 @@ class CacheWarmer
      */
     protected function _getSitemapUrl()
     {
-        $sSitemapUrl = Registry::getConfig()->getShopURL();
+        $sSitemapUrl = Registry::getConfig()->getConfigParam('sShopURL');
         $sSitemapUrl .= Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl');
+
         return $sSitemapUrl;
     }
 

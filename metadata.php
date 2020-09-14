@@ -6,9 +6,9 @@
  * (at your option) any later version.
  *
  * @copyright (c) ProudCommerce | 2020
- * @link www.proudcommerce.com
- * @package psCacheWarmer
- * @version 3.0.1
+ * @link          www.proudcommerce.com
+ * @package       psCacheWarmer
+ * @version       3.1.0
  **/
 
 /**
@@ -27,7 +27,7 @@ $aModule = [
         'en' => 'Automatically calling urls using the xml-sitemap, eg. for cache warmup.',
     ],
     'thumbnail'   => 'logo_pc-os.jpg',
-    'version'     => '3.0.1',
+    'version'     => '3.1.0',
     'author'      => 'ProudCommerce',
     'url'         => 'https://github.com/proudcommerce/psCacheWarmer',
     'email'       => '',
