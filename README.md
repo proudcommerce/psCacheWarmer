@@ -6,7 +6,7 @@ Free module for OXID eshop 6.
 
 Features
 
-	- set sitemap url in admin
+	- set sitemap url in admin / or cli parameter
 	- optional basic auth user/password
 	- optional csv logfile
 
@@ -16,13 +16,19 @@ Installation
 
 Usage
 
-	php source/modules/pc/cachewarmer/bin/warmup.php [optional parameter s for shop-id, eg. warmup.php -s 2]
+	php source/modules/pc/cachewarmer/bin/warmup.php [optional parameter s for shop-id, eg. warmup.php -s 2 -f sitemaps/categories.xml]
+
+Parameters:
+
+    -s: ShopId: -s 2
+    -f: Path to separte Sitemap: -f sitemaps/categories.xml
 	
 Changelog
 
-    	2020-09-15  3.1.1   readd ee shopurl fix (missing 3.0.1)
+    2021-03-17  3.1.2   add new new parameter -f for separate File
+    2020-09-15  3.1.1   readd ee shopurl fix (missing 3.0.1)
 	2020-09-14  3.1.0   add own logger
-    	2020-08-17  3.0.0   cli only, some improvements
+    2020-08-17  3.0.0   cli only, some improvements
 	2020-08-06  2.2.1   fix for OXID 6.2
 	2019-07-19  2.2.0   Write Report in a file (PR #3)
 	2019-07-17  2.1.0   add error 500 check (PR #2)

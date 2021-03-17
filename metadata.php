@@ -27,7 +27,7 @@ $aModule = [
         'en' => 'Automatically calling urls using the xml-sitemap, eg. for cache warmup.',
     ],
     'thumbnail'   => 'logo_pc-os.jpg',
-    'version'     => '3.1.1',
+    'version'     => '3.1.2',
     'author'      => 'ProudCommerce',
     'url'         => 'https://github.com/proudcommerce/psCacheWarmer',
     'email'       => '',
