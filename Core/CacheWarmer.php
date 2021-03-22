@@ -22,14 +22,19 @@ use OxidEsales\Eshop\Core\Registry;
  */
 class CacheWarmer
 {
+    private string $sCliSiteMapFile = '';
 
     /**
      *
      */
-    public function run()
+    public function run($sFileSitemap)
     {
+        $this->sCliSiteMapFile = trim($sFileSitemap);
+
         $aUrls = $this->_getSitemapContent();
-        if (!empty(Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl')) && !empty($aUrls)) {
+        if ((!empty(Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl'))
+                || !empty($sFileSitemap))
+            && !empty($aUrls)) {
             foreach ($aUrls as $sUrl) {
                 $oCurl = $this->_runCurlConnect($sUrl);
                 $this->_checkCurlResults($oCurl, $sUrl);
@@ -94,15 +99,17 @@ class CacheWarmer
     protected function _getSitemapContent($sSitemapUrl = "")
     {
         $aUrls = [];
-        if (empty($sSitemapUrl)) {
-            $sSitemapUrl = $this->_getSitemapUrl();
+        if (empty($sSitemapUrl) && $this->sCliSiteMapFile == '')
+        {
+            $sSitemapUrl = $this->_getSitemapUrl($sSitemapUrl);
         }
-
+        elseif (empty($sSitemapUrl) && $this->sCliSiteMapFile != '')
+        {
+            $sSitemapUrl = $this->_getSitemapUrl($this->sCliSiteMapFile);
+        }
         $sUsername = Registry::getConfig()->getShopConfVar('psCacheWarmerUser');
         $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
         $sSitemapUrl = str_replace("://", "://" . $sUsername . ":" . $sPassword . "@", $sSitemapUrl);
-
-        echo $sSitemapUrl . "\r\n";
 
         $sSitemapXmlData = @file_get_contents($sSitemapUrl);
         if ($oSitemap = @simplexml_load_string($sSitemapXmlData)) {
@@ -126,10 +133,17 @@ class CacheWarmer
     /**
      * @return string
      */
-    protected function _getSitemapUrl()
+    protected function _getSitemapUrl($sSitemapFile)
     {
         $sSitemapUrl = Registry::getConfig()->getShopURL();
-        $sSitemapUrl .= Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl');
+
+        if($sSitemapFile != '')
+        {
+            $sSitemapUrl .= $sSitemapFile;
+        }
+        else{
+            $sSitemapUrl .= Registry::getConfig()->getShopConfVar('psCacheWarmerSitemapUrl');
+        }
 
         return $sSitemapUrl;
     }

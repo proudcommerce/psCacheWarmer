@@ -15,20 +15,28 @@ if (PHP_SAPI != 'cli') {
     die('Only cli execution allowed!'."\r\n");
 }
 
-$options = getopt('s:');
+$options = getopt('s:f:');
 $shopId = $options['s'] ?? 0;
 if (!$shopId) {
     $shopId = 1;
 }
 
+$sFileSiteMap = $options['f'] ?? '';
+if (!$sFileSiteMap) {
+    $sFileSitemap = '';
+}
 require_once dirname(__FILE__) . '/../../../../bootstrap.php';
 
 use OxidEsales\Eshop\Core\Registry;
 use ProudCommerce\CacheWarmer\Core\CacheWarmer;
 
 echo 'Shop-ID '.$shopId." is used!\r\n";
+if($sFileSiteMap != '') {
+    echo 'Sitemap: ' . $sFileSiteMap . " is used!\r\n";
+}
 Registry::getConfig()->setShopId($shopId);
 Registry::set(Config::class, null);
 
+
 $cacheWarmer = new CacheWarmer();
-$cacheWarmer->run();
+$cacheWarmer->run($sFileSiteMap);
