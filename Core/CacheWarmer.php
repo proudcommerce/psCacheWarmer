@@ -55,6 +55,7 @@ class CacheWarmer
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($oCurl, CURLOPT_CONNECTTIMEOUT, 25);
         curl_setopt($oCurl, CURLOPT_HEADER, true);
+        curl_setopt($oCurl, CURLOPT_USERAGENT, 'CacheWarmer');
         $sUsername = Registry::getConfig()->getShopConfVar('psCacheWarmerUser');
         $sPassword = Registry::getConfig()->getShopConfVar('psCacheWarmerPass');
         curl_setopt($oCurl, CURLOPT_USERPWD, $sUsername . ":" . $sPassword);
